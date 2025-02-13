@@ -977,7 +977,7 @@ static void compute_scale_factors(const struct sbc_frame *frame,
     const int16_t (*sb_samples)[SBC_MAX_SAMPLES],
     int (*scale_factors)[SBC_MAX_SUBBANDS])
 {
-    for (int ich = 0; ich < 1 + (frame->mode != SBC_MODE_MONO); ich++)
+    for (int ich = 0; ich < 1 + (frame->mode == SBC_MODE_MONO); ich++)
         for (int isb = 0; isb < frame->nsubbands; isb++) {
             unsigned m = 0;
 
