@@ -977,7 +977,7 @@ static void compute_scale_factors(const struct sbc_frame *frame,
     const int16_t (*sb_samples)[SBC_MAX_SAMPLES],
     int (*scale_factors)[SBC_MAX_SUBBANDS])
 {
-    for (int ich = 0; ich < 1 + (frame->mode == SBC_MODE_MONO); ich++)
+    for (int ich = 0; ich < 1 + (frame->mode != SBC_MODE_MONO); ich++)
         for (int isb = 0; isb < frame->nsubbands; isb++) {
             unsigned m = 0;
 
@@ -1066,9 +1066,6 @@ static void encode_frame(sbc_bits_t *bits,
         compute_scale_factors_js(frame, sb_samples, scale_factors, &mjoint);
     else
         compute_scale_factors(frame, sb_samples, scale_factors);
-
-    if (frame->mode == SBC_MODE_DUAL_CHANNEL)
-        compute_scale_factors(frame, sb_samples + 1, scale_factors + 1);
 
     /* --- Joint-Stereo mask --- */
 
